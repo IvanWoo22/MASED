@@ -20,7 +20,9 @@ Analyse the history and methylation of segmental duplications of *Arabidopsis th
 
 * [`analy_meth`](analy_meth.sh): Analyse the methylation of segments.
 
-## Concepts
+## Requirements
+
+### MCScanX
 
 ### IntSpans
 
