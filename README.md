@@ -8,7 +8,7 @@
 
 Analyse the history and methylation of segmental duplications of *Arabidopsis thaliana*.  
 
-* Which segments are duplications?
+* Which segments are duplicated from others?
 * When did their duplication happen?
 * How does the methylation of these duplications change during evolution and function acquisition？  
 
@@ -70,7 +70,17 @@ We choose 5 species to build up a time line.
 
 ![tree](doc/tree.png)
 
-To download them, you should go to JGI website with login. We also provide some data in our folder [`data/`](data/). Others like *Theobroma cacao* and *Brassica rapa* can be downloaded from other database. Take *Theobroma cacao* as an example:  
+To download them, you should go to JGI website with login. We also provide some data in our folder [`data/`](data/). Others like *Theobroma cacao* and *Brassica rapa* can be downloaded from other database. 
+
+| Specie Name | Database | Version |
+| - | - | - |
+| *Arabidopsis thaliana* | Araport | [V11](https://phytozome.jgi.doe.gov/pz/portal.html#!info?alias=Org_Athaliana_er) |
+| *Arabidopsis lyrata* | JGI | [V2.1](https://phytozome.jgi.doe.gov/pz/portal.html#!info?alias=Org_Alyrata) |
+| *Capsella rubella* | JGI | [V1.1](https://phytozome.jgi.doe.gov/pz/portal.html#!info?alias=Org_Crubella) |
+| *Brassica rapa* | BRAD | [V3.0](http://brassicadb.org/brad/) |
+| *Theobroma cacao* |  | [V2](https://cocoa-genome-hub.southgreen.fr/download) |
+
+Take *Theobroma cacao* as an example:  
 **(ATTENTION: If you want to try this for yourself, make sure you have removed the corresponding files in the folder!)**
 
 ```bash
