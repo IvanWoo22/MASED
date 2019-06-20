@@ -44,7 +44,7 @@ unzip bismark.zip
 cd ~
 ```
 
-Put into `PATH`
+#### Put into `PATH`
 
 ```bash
 echo '# Bismark' >> .bashrc
@@ -63,6 +63,21 @@ source .bashrc
 We choose 5 species to build up a time line.
 
 ![tree](doc/tree.png)
+
+To download them, you should go to JGI website with login. We also provide some data in our folder [`data/`](data/). Others like *Theobroma cacao* and *Brassica rapa* can be downloaded from other database. Take *Theobroma cacao* as an example:  
+**(ATTENTION: If you want to try this for yourself, make sure you have removed the corresponding files in the folder!)**
+
+```bash
+wget https://cocoa-genome-hub.southgreen.fr/sites/cocoa-genome-hub.southgreen.fr/files/download/Theobroma_cacaoV2_annot_annoted_clean.gff3.tar.gz
+tar -zvxf Theobroma_cacaoV2_annot_annoted_clean.gff3.tar.gz
+mv Theobroma_cacaoV2_annot_annoted_clean.gff3 ~/MASED/data/Tcac.gff3
+rm Theobroma_cacaoV2_annot_annoted_clean.gff3.tar.gz
+
+wget https://cocoa-genome-hub.southgreen.fr/sites/cocoa-genome-hub.southgreen.fr/files/download/Theobroma_cacaoV2_annot_protein.faa.tar.gz
+tar -zvxf Theobroma_cacaoV2_annot_protein.faa.tar.gz
+mv Theobroma_cacaoV2_annot_protein.faa ~/MASED/data/Tcac.pep
+rm Theobroma_cacaoV2_annot_protein.faa.tar.gz
+```
 
 ### IntSpans
 
