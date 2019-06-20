@@ -6,7 +6,13 @@
 
 ## Purpose
 
-Analyse the history and methylation of segmental duplications of *Arabidopsis thaliana*.
+Analyse the history and methylation of segmental duplications of *Arabidopsis thaliana*.  
+
+* Which segments are duplications?
+* When did their duplication happen?
+* How does the methylation of these duplications change during evolution and function acquisition？  
+
+![workflow](doc/workflow.png)
 
 ## Directory organization
 
