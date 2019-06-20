@@ -24,7 +24,7 @@ Analyse the history and methylation of segmental duplications of *Arabidopsis th
 
 ### Software
 
-Here we firstly install MCScanX and Bismark.
+Here we should firstly install [Sra-toolkit](https://trace.ncbi.nlm.nih.gov/Traces/sra/sra.cgi?view=software), [MCScanX](http://chibba.pgml.uga.edu/mcscan2/) and [Bismark](https://github.com/FelixKrueger/Bismark).
 
 #### MCScanX
 
@@ -77,6 +77,17 @@ wget https://cocoa-genome-hub.southgreen.fr/sites/cocoa-genome-hub.southgreen.fr
 tar -zvxf Theobroma_cacaoV2_annot_protein.faa.tar.gz
 mv Theobroma_cacaoV2_annot_protein.faa ~/MASED/data/Tcac.pep
 rm Theobroma_cacaoV2_annot_protein.faa.tar.gz
+```
+
+#### BS-Seq
+
+We choose [SRX2871291](https://www.ncbi.nlm.nih.gov/sra/SRX2871291[accn]) and [SRX2871292](https://www.ncbi.nlm.nih.gov/sra/SRX2871292[accn]) as the BS-Seq data of the Columbia wild type *Arabidopsis thaliana*.
+
+```bash
+prefetch SRR5631389
+prefetch SRR5631390
+prefetch SRR5631391
+prefetch SRR5631392
 ```
 
 ### IntSpans
