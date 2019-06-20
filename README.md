@@ -53,6 +53,7 @@ echo >> .bashrc
 echo '# MCScanX' >> .bashrc
 echo 'export PATH="$HOME/MASED/MCScanX:$PATH"' >> .bashrc
 echo >> .bashrc
+source .bashrc
 ```
 
 ### Data
