@@ -44,7 +44,7 @@ unzip bismark.zip
 cd ~
 ```
 
-Put into PATH
+Put into `PATH`
 
 ```bash
 echo '# Bismark' >> .bashrc
@@ -59,6 +59,10 @@ source .bashrc
 ### Data
 
 #### Collinear
+
+We choose 5 species to build up a time line.
+
+![tree](doc/tree.png)
 
 ### IntSpans
 
