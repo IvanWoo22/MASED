@@ -33,7 +33,31 @@ cd MASED
 unzip MCScanX.zip
 cd MCScanX
 make
+cd ~
 ```
+
+#### Bismark
+
+```bash
+cd MASED
+unzip bismark.zip
+cd ~
+```
+
+Put into PATH
+
+```bash
+echo '# Bismark' >> .bashrc
+echo 'export PATH="$HOME/MASED/bismark:$PATH"' >> .bashrc
+echo >> .bashrc
+echo '# MCScanX' >> .bashrc
+echo 'export PATH="$HOME/MASED/MCScanX:$PATH"' >> .bashrc
+echo >> .bashrc
+```
+
+### Data
+
+#### Collinear
 
 ### IntSpans
 
