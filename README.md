@@ -22,7 +22,18 @@ Analyse the history and methylation of segmental duplications of *Arabidopsis th
 
 ## Requirements
 
-### MCScanX
+### Software
+
+Here we firstly install MCScanX and Bismark.
+
+#### MCScanX
+
+```bash
+cd MASED
+unzip MCScanX.zip
+cd MCScanX
+make
+```
 
 ### IntSpans
 
