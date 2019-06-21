@@ -26,7 +26,7 @@ Analyse the history and methylation of segmental duplications of *Arabidopsis th
 
 * [`analy_meth`](analy_meth.sh): Analyse the methylation of segments.
 
-## Requirements
+## Preparations
 
 ### Software
 
@@ -73,12 +73,12 @@ We choose 5 species to build up a time line.
 To download them, you should go to JGI website with login. We also provide some data in our folder [`data/`](data/). Others like *Theobroma cacao* and *Brassica rapa* can be downloaded from other database. 
 
 | Specie Name | Database | Version |
-| - | - | - |
+| :- | :-:| -: |
 | *Arabidopsis thaliana* | Araport | [V11](https://phytozome.jgi.doe.gov/pz/portal.html#!info?alias=Org_Athaliana_er) |
 | *Arabidopsis lyrata* | JGI | [V2.1](https://phytozome.jgi.doe.gov/pz/portal.html#!info?alias=Org_Alyrata) |
 | *Capsella rubella* | JGI | [V1.1](https://phytozome.jgi.doe.gov/pz/portal.html#!info?alias=Org_Crubella) |
 | *Brassica rapa* | BRAD | [V3.0](http://brassicadb.org/brad/) |
-| *Theobroma cacao* |  | [V2](https://cocoa-genome-hub.southgreen.fr/download) |
+| *Theobroma cacao* | Cocoa Genome Hub | [V2](https://cocoa-genome-hub.southgreen.fr/download) |
 
 Take *Theobroma cacao* as an example:  
 **(ATTENTION: If you want to try this for yourself, make sure you have removed the corresponding files in the folder!)**
@@ -106,18 +106,26 @@ prefetch SRR5631391
 prefetch SRR5631392
 ```
 
-### IntSpans
+The data is now in `~/ncbi/public/sra/`
 
-An IntSpan represents sets of integers as a number of inclusive ranges, for example '1-10,19,45-48'.
+```bash
+mv ~/ncbi/public/sra/SRR56313* ~/MASED/data/.
+cd ~/MASED/data/
+fastq-dump --split-3 SRR56313*
+rm SRR56313*.sra
+```
 
-The following picture is the schema of an IntSpan object. Jump lines are above the baseline; loop
-lines are below it.
+## Analysis
 
-![intspans](doc/intspans.png)
+### Pretreatment for MCScanX
 
-[AlignDB::IntSpan](https://github.com/wang-q/AlignDB-IntSpan) and
-[jintspan](https://github.com/egateam/jintspan) are implements of IntSpan objects in Perl and Java,
-respectively.
+```bash
+awk '$3 == "gene" {print $1 "\t" $4 "\t" $5 "\t" $9 "\t" $7}' Atha.gff3 > Atha.gene.gff
+awk '$3 == "gene" {print $1 "\t" $4 "\t" $5 "\t" $9 "\t" $7}' Alyr.gff3 > Alyr.gene.gff
+awk '$3 == "gene" {print $1 "\t" $4 "\t" $5 "\t" $9 "\t" $7}' Crub.gff3 > Crub.gene.gff
+awk '$3 == "gene" {print $1 "\t" $4 "\t" $5 "\t" $9 "\t" $7}' Brap.gff3 > Brap.gene.gff
+awk '$3 == "gene" {print $1 "\t" $4 "\t" $5 "\t" $9 "\t" $7}' Tcac.gff3 > Tcac.gene.gff
+```
 
 ### Positions
 
