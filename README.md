@@ -120,11 +120,46 @@ rm SRR56313*.sra
 ### Pretreatment for MCScanX
 
 ```bash
+cd ~/MASED/data
+
 awk '$3 == "gene" {print $1 "\t" $4 "\t" $5 "\t" $9 "\t" $7}' Atha.gff3 > Atha.gene.gff
 awk '$3 == "gene" {print $1 "\t" $4 "\t" $5 "\t" $9 "\t" $7}' Alyr.gff3 > Alyr.gene.gff
 awk '$3 == "gene" {print $1 "\t" $4 "\t" $5 "\t" $9 "\t" $7}' Crub.gff3 > Crub.gene.gff
 awk '$3 == "gene" {print $1 "\t" $4 "\t" $5 "\t" $9 "\t" $7}' Brap.gff3 > Brap.gene.gff
 awk '$3 == "gene" {print $1 "\t" $4 "\t" $5 "\t" $9 "\t" $7}' Tcac.gff3 > Tcac.gene.gff
+
+perl ../gff_pep_Atha.pl Atha.gene.gff AT.gff Atha.pep > AT.pep
+perl ../gff_pep_Alyr.pl Alyr.gene.gff AL.gff Alyr.pep > AL.pep
+perl ../gff_pep_Crub.pl Crub.gene.gff CR.gff Crub.pep > CR.pep
+perl ../gff_pep_Brap.pl Brap.gene.gff BR.gff Brap.pep > BR.pep
+perl ../gff_pep_Tcac.pl Tcac.gene.gff TC.gff Tcac.pep > TC.pep
+
+makeblastdb -in AT.pep -dbtype prot -parse_seqids -out ATdb
+
+nohup blastp -query AL.pep -db ATdb -out AT_AL.blast -evalue 1e-10 -num_threads 4 -outfmt 6 -num_alignments 5 &
+nohup blastp -query CR.pep -db ATdb -out AT_CR.blast -evalue 1e-10 -num_threads 4 -outfmt 6 -num_alignments 5 &
+nohup blastp -query BR.pep -db ATdb -out AT_BR.blast -evalue 1e-10 -num_threads 4 -outfmt 6 -num_alignments 5 &
+nohup blastp -query TC.pep -db ATdb -out AT_TC.blast -evalue 1e-10 -num_threads 4 -outfmt 6 -num_alignments 5 &
+
+cat AT.gff AL.gff > AT_AL.gff
+cat AT.gff CR.gff > AT_CR.gff
+cat AT.gff BR.gff > AT_BR.gff
+cat AT.gff TC.gff > AT_TC.gff
+```
+
+### Run MCScanX
+
+```bash
+mcscanx -s 3 -m 2 AT_AL
+mcscanx -s 3 -m 2 AT_CR
+mcscanx -s 3 -m 2 AT_BR
+mcscanx -s 3 -m 2 AT_TC
+
+perl ../colline2yml.pl AT.gff AT_AT.collinearity > AT_AT.yml
+perl ../colline2yml_AL.pl AT.gff AT_AL.collinearity > AT_AL.yml
+perl ../colline2yml.pl AT.gff AT_CR.collinearity > AT_CR.yml
+perl ../colline2yml.pl AT.gff AT_BR.collinearity > AT_BR.yml
+perl ../colline2yml.pl AT.gff AT_TC.collinearity > T_TC.yml
 ```
 
 ### Positions
