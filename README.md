@@ -83,7 +83,7 @@ To download them, you should go to JGI website with login. We also provide some 
 Take *Theobroma cacao* as an example:  
 **(ATTENTION: If you want to try this for yourself, make sure you have removed the corresponding files in the folder!)**
 
-```bash
+```shell script
 wget https://cocoa-genome-hub.southgreen.fr/sites/cocoa-genome-hub.southgreen.fr/files/download/Theobroma_cacaoV2_annot_annoted_clean.gff3.tar.gz
 tar -zvxf Theobroma_cacaoV2_annot_annoted_clean.gff3.tar.gz
 mv Theobroma_cacaoV2_annot_annoted_clean.gff3 ~/MASED/data/Tcac.gff3
@@ -94,6 +94,11 @@ tar -zvxf Theobroma_cacaoV2_annot_protein.faa.tar.gz
 mv Theobroma_cacaoV2_annot_protein.faa ~/MASED/data/Tcac.pep
 rm Theobroma_cacaoV2_annot_protein.faa.tar.gz
 ```
+
+#### Segment Duplication
+
+We have a reference genome fasta of *Arabidopsis thaliana* in our folder [`data/`](data/.).
+And then we prepare the genome with [App::Egaz](https://github.com/wang-q/App-Egaz).
 
 #### BS-Seq
 
@@ -122,17 +127,17 @@ rm SRR56313*.sra
 ```shell script
 cd ~/MASED/data
 
-awk '$3 == "gene" {print $1 "\t" $4 "\t" $5 "\t" $9 "\t" $7}' Atha.gff3 > Atha.gene.gff
-awk '$3 == "gene" {print $1 "\t" $4 "\t" $5 "\t" $9 "\t" $7}' Alyr.gff3 > Alyr.gene.gff
-awk '$3 == "gene" {print $1 "\t" $4 "\t" $5 "\t" $9 "\t" $7}' Crub.gff3 > Crub.gene.gff
-awk '$3 == "gene" {print $1 "\t" $4 "\t" $5 "\t" $9 "\t" $7}' Brap.gff3 > Brap.gene.gff
-awk '$3 == "gene" {print $1 "\t" $4 "\t" $5 "\t" $9 "\t" $7}' Tcac.gff3 > Tcac.gene.gff
+awk '$3 == "gene" {print $1 "\t" $4 "\t" $5 "\t" $9 "\t" $7}' Atha/Atha.gff3 > Atha.gene.gff
+awk '$3 == "gene" {print $1 "\t" $4 "\t" $5 "\t" $9 "\t" $7}' Alyr/Alyr.gff3 > Alyr.gene.gff
+awk '$3 == "gene" {print $1 "\t" $4 "\t" $5 "\t" $9 "\t" $7}' Crub/Crub.gff3 > Crub.gene.gff
+awk '$3 == "gene" {print $1 "\t" $4 "\t" $5 "\t" $9 "\t" $7}' Brap/Brap.gff3 > Brap.gene.gff
+awk '$3 == "gene" {print $1 "\t" $4 "\t" $5 "\t" $9 "\t" $7}' Tcac/Tcac.gff3 > Tcac.gene.gff
 
-perl ../gff_pep_Atha.pl Atha.gene.gff AT.gff Atha.pep > AT.pep
-perl ../gff_pep_Alyr.pl Alyr.gene.gff AL.gff Alyr.pep > AL.pep
-perl ../gff_pep_Crub.pl Crub.gene.gff CR.gff Crub.pep > CR.pep
-perl ../gff_pep_Brap.pl Brap.gene.gff BR.gff Brap.pep > BR.pep
-perl ../gff_pep_Tcac.pl Tcac.gene.gff TC.gff Tcac.pep > TC.pep
+perl ../gff_pep_Atha.pl Atha.gene.gff AT.gff Atha/Atha.pep > AT.pep
+perl ../gff_pep_Alyr.pl Alyr.gene.gff AL.gff Alyr/Alyr.pep > AL.pep
+perl ../gff_pep_Crub.pl Crub.gene.gff CR.gff Crub/Crub.pep > CR.pep
+perl ../gff_pep_Brap.pl Brap.gene.gff BR.gff Brap/Brap.pep > BR.pep
+perl ../gff_pep_Tcac.pl Tcac.gene.gff TC.gff Tcac/Tcac.pep > TC.pep
 
 makeblastdb -in AT.pep -dbtype prot -parse_seqids -out ATdb
 
@@ -160,6 +165,20 @@ perl ../colline2yml_AL.pl AT.gff AT_AL.collinearity > AT_AL.yml
 perl ../colline2yml.pl AT.gff AT_CR.collinearity > AT_CR.yml
 perl ../colline2yml.pl AT.gff AT_BR.collinearity > AT_BR.yml
 perl ../colline2yml.pl AT.gff AT_TC.collinearity > T_TC.yml
+```
+
+### Find Segment Duplication
+
+```shell script
+cd ~/MASED/data/
+egaz repeatmasker Atha/Atha.fa -o . --gff --parallel 4
+faops size Atha.fa > ./chr.sizes
+mv Atha/Atha.gff3 ./chr.gff
+
+# create anno.yml
+runlist gff --tag CDS --remove chr.gff -o cds.yml
+runlist gff --remove Atha.rm.gff -o repeat.yml
+runlist merge repeat.yml cds.yml -o anno.yml
 ```
 
 ### Positions
