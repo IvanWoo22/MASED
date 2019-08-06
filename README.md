@@ -34,7 +34,7 @@ Here we should firstly install [Sra-toolkit](https://trace.ncbi.nlm.nih.gov/Trac
 
 #### MCScanX
 
-```bash
+```shell script
 cd MASED
 unzip MCScanX.zip
 cd MCScanX
@@ -44,7 +44,7 @@ cd ~
 
 #### Bismark
 
-```bash
+```shell script
 cd MASED
 unzip bismark.zip
 cd ~
@@ -52,7 +52,7 @@ cd ~
 
 #### Put into `PATH`
 
-```bash
+```shell script
 echo '# Bismark' >> .bashrc
 echo 'export PATH="$HOME/MASED/bismark:$PATH"' >> .bashrc
 echo >> .bashrc
@@ -70,7 +70,7 @@ We choose 5 species to build up a time line.
 
 ![tree](doc/tree.png)
 
-To download them, you should go to JGI website with login. We also provide some data in our folder [`data/`](data/). Others like *Theobroma cacao* and *Brassica rapa* can be downloaded from other database. 
+To download them, you should go to JGI website with login. We also provide some data in our folder [`data/`](data/.). Others like *Theobroma cacao* and *Brassica rapa* can be downloaded from other database. 
 
 | Specie Name | Database | Version |
 | :- | :-:| -: |
@@ -119,7 +119,7 @@ rm SRR56313*.sra
 
 ### Pretreatment for MCScanX
 
-```bash
+```shell script
 cd ~/MASED/data
 
 awk '$3 == "gene" {print $1 "\t" $4 "\t" $5 "\t" $9 "\t" $7}' Atha.gff3 > Atha.gene.gff
@@ -149,7 +149,7 @@ cat AT.gff TC.gff > AT_TC.gff
 
 ### Run MCScanX
 
-```bash
+```shell script
 mcscanx -s 3 -m 2 AT_AL
 mcscanx -s 3 -m 2 AT_CR
 mcscanx -s 3 -m 2 AT_BR
