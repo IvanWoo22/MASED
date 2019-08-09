@@ -104,7 +104,7 @@ And then we prepare the genome with [App::Egaz](https://github.com/wang-q/App-Eg
 
 We choose [SRX2871291](https://www.ncbi.nlm.nih.gov/sra/SRX2871291[accn]) and [SRX2871292](https://www.ncbi.nlm.nih.gov/sra/SRX2871292[accn]) as the BS-Seq data of the Columbia wild type *Arabidopsis thaliana*.
 
-```bash
+```shell script
 prefetch SRR5631389
 prefetch SRR5631390
 prefetch SRR5631391
@@ -113,7 +113,7 @@ prefetch SRR5631392
 
 The data is now in `~/ncbi/public/sra/`
 
-```bash
+```shell script
 mv ~/ncbi/public/sra/SRR56313* ~/MASED/data/.
 cd ~/MASED/data/
 fastq-dump --split-3 SRR56313*
@@ -171,14 +171,33 @@ perl ../colline2yml.pl AT.gff AT_TC.collinearity > T_TC.yml
 
 ```shell script
 cd ~/MASED/data/
-egaz repeatmasker Atha/Atha.fa -o . --gff --parallel 4
-faops size Atha.fa > ./chr.sizes
+
+gzip -dc Atha/Atha.fa.gz > Atha/Atha.fa
+
+faops filter -N -s Atha/Atha.fa stdout | faops split-name stdin .
+egaz repeatmasker ./*.fa -o . --gff --parallel 4
+faops size ./*.fa > ./chr.sizes
 mv Atha/Atha.gff3 ./chr.gff
 
 # create anno.yml
 runlist gff --tag CDS --remove chr.gff -o cds.yml
 runlist gff --remove Atha.rm.gff -o repeat.yml
 runlist merge repeat.yml cds.yml -o anno.yml
+
+rm repeat.yml cds.yml Atha.rm.gff Atha.rm.out
+
+egaz template \
+    . \
+    --self -o AT_FSD \
+    --taxon Atha/ensembl_taxon.csv \
+    --circos --aligndb --parallel 4 -v
+
+bash AT_FSD/1_self.sh
+bash AT_FSD/3_proc.sh
+bash AT_FSD/4_circos.sh
+bash AT_FSD/6_chr_length.sh
+bash AT_FSD/7_self_aligndb.sh
+bash AT_FSD/9_pack_up.sh
 ```
 
 ### Positions
