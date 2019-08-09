@@ -36,7 +36,7 @@ Here we should firstly install [Sra-toolkit](https://trace.ncbi.nlm.nih.gov/Trac
 
 ```shell script
 cd MASED
-unzip MCScanX.zip
+unzip resource/MCScanX.zip
 cd MCScanX
 make
 cd ~
@@ -46,7 +46,7 @@ cd ~
 
 ```shell script
 cd MASED
-unzip bismark.zip
+unzip resource/bismark.zip
 cd ~
 ```
 
@@ -171,13 +171,13 @@ perl ../colline2yml.pl AT.gff AT_TC.collinearity > T_TC.yml
 
 ```shell script
 cd ~/MASED/data/
-
+mkdir SAAT
 gzip -dc Atha/Atha.fa.gz > Atha/Atha.fa
 
 faops filter -N -s Atha/Atha.fa stdout | faops split-name stdin .
-egaz repeatmasker ./*.fa -o . --gff --parallel 4
-faops size ./*.fa > ./chr.sizes
-mv Atha/Atha.gff3 ./chr.gff
+egaz repeatmasker ./*.fa -o SAAT/. --gff --parallel 4
+faops size ./*.fa > SAAT/chr.sizes
+mv Atha/Atha.gff3 SAAT/chr.gff
 
 # create anno.yml
 runlist gff --tag CDS --remove chr.gff -o cds.yml
