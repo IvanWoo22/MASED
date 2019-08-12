@@ -160,6 +160,7 @@ mcscanx -s 3 -m 2 AT_CR
 mcscanx -s 3 -m 2 AT_BR
 mcscanx -s 3 -m 2 AT_TC
 
+# extract ranges of segment duplications
 perl ../colline2yml.pl AT.gff AT_AT.collinearity > AT_AT.yml
 perl ../colline2yml_AL.pl AT.gff AT_AL.collinearity > AT_AL.yml
 perl ../colline2yml.pl AT.gff AT_CR.collinearity > AT_CR.yml
@@ -177,19 +178,21 @@ gzip -dc Atha/Atha.fa.gz > Atha/Atha.fa
 faops filter -N -s Atha/Atha.fa stdout | faops split-name stdin .
 egaz repeatmasker ./*.fa -o SAAT/. --gff --parallel 4
 faops size ./*.fa > SAAT/chr.sizes
+faToTwoBit ./*.fa SAAT/chr.2bit
+cat ./*.fa | faops filter -ßßU stdin SAAT/chr.fasta
 mv Atha/Atha.gff3 SAAT/chr.gff
 
 # create anno.yml
 runlist gff --tag CDS --remove chr.gff -o cds.yml
-runlist gff --remove Atha.rm.gff -o repeat.yml
+runlist gff --remove ./*.rm.gff -o repeat.yml
 runlist merge repeat.yml cds.yml -o anno.yml
 
-rm repeat.yml cds.yml Atha.rm.gff Atha.rm.out
+rm repeat.yml cds.yml ./*.rm.gff /*.rm.out
 
 egaz template \
     . \
     --self -o AT_FSD \
-    --taxon Atha/ensembl_taxon.csv \
+    --taxon ./ensembl_taxon.csv \
     --circos --aligndb --parallel 4 -v
 
 bash AT_FSD/1_self.sh
