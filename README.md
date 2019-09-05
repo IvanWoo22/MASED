@@ -70,7 +70,7 @@ We choose 5 species to build up a time line.
 
 ![tree](doc/tree.png)
 
-To download them, you should go to JGI website with login. We also provide some data in our folder [`data/`](data/.). Others like *Theobroma cacao* and *Brassica rapa* can be downloaded from other database. 
+To download them, you should go to JGI website with login. We also provide some data in our folder [`data/`](data/.). Others like *Theobroma cacao* and *Brassica rapa* can be downloaded from other database.  
 
 | Specie Name | Database | Version |
 | :- | :-:| -: |
