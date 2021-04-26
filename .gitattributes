@@ -1,0 +1,2 @@
+*.pep linguist-documentation=true
+*.gff3 linguist-documentation=true
